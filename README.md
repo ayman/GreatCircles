@@ -23,6 +23,8 @@ source the `start.R` code.  This code was put together for a talk to
 the [Singapore R Users group](http://www.meetup.com/R-User-Group-SG/).
 
 The data in `flights.csv` is fictional.  Just so you know that Virgin
-America doesn't have a SFO to SFO flight.
+America doesn't have a SFO to SFO flight.  There are several good
+[Airport Databases](http://www.partow.net/miscellaneous/airportdatabase/)
+around the web too.
 
 [@ayman](https://github.com/ayman)
