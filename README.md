@@ -18,6 +18,9 @@ For the point of this instructional, you'll need the following librarires:
 
 the last one just being for the fun of it really.
 
+The code itself is documented explaining the step by step.  Just
+source the `start.R` code.
+
 The data in `flights.csv` is fictional.  Just so you know that Virgin
 America doesn't have a SFO to SFO flight.
 
