@@ -252,5 +252,5 @@ legend.values <- c("United Airlines"="#fdbf6f", "Lufthansa"="#e31a1c",
 ### Fin.
 #### final.plot + scale_colour_manual(values=legend.values, breaks=legend.labels)
 ### ggsave(filename="final.plot.pdf", plot=final.plot, width=14)
-ggsave(filename="final.plot.png", plot=final.plot, width=14)
+ggsave(filename="final.plot.png", plot=final.plot, width=7, height=3)
 (final.plot)
