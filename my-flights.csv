@@ -1,4 +1,4 @@
-Row From To Airline
+Row,From,To,Airline
 1,BNE,ADL,AirAsia Japan
 2,ADL,BNE,AirAsia Japan
 3,SFO,EWR,United Airlines
