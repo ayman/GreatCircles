@@ -255,8 +255,8 @@ legend.values <- c("United Airlines"="#a6ceff", "Lufthansa"="#e31a1c",
 ### Fin.
 final.plot + scale_colour_manual(values=legend.values, breaks=legend.labels)
 ### ggsave(filename="final.plot.pdf", plot=final.plot, width=14)
-ggsave(filename="final.plot.png", plot=final.plot, width=7, height=3)
-(final.plot)
+ggsave(filename="plot.map.png", plot=final.plot, width=7, height=3)
+## (final.plot)
 
 ## Make TreeMap of Countries (main) by Airline (subcategory)
 air2country <- data.frame(airline=paths$airline, country=paths$ecountry)
@@ -264,7 +264,7 @@ a2c <- as.data.frame(table(air2country))
 a2c <- a2c[a2c$Freq > 0, ]
 
 library(treemap)
-# tmPlot(a2c, index=c("country", "airline"), vSize="Freq")
+png("plot.tm.png")
 treemap(a2c,
         index = c("country", "airline"),
         vSize = "Freq",
@@ -280,3 +280,4 @@ treemap(a2c,
         overlap.labels = 0,
         align.labels = list(c("right", "bottom"),
                             c("left", "top")))
+dev.off()
