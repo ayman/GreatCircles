@@ -14,7 +14,8 @@ For the point of this instructional, you'll need the following librarires:
 * `maps`
 * `ggplot2`
 * `geosphere`
-* `multicore`
+* `parallel`
+* `treemap`
 
 the last one just being for the fun of it really.
 

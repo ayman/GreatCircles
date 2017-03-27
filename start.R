@@ -10,7 +10,8 @@
 ###   maps
 ###   ggplot2
 ###   geosphere
-###   multicore
+###   parallel
+###   treemap
 ### the last one just being for the fun of it.
 
 ### The Airport data comes in the following format.
@@ -113,7 +114,6 @@ library(maps)
 library(ggplot2)
 library(geosphere)
 library(parallel)
-## library(multicore)
 
 ### Get a crummy map projection of the world.
 getWorldMap <- function(long="long", lat="lat") {
@@ -258,7 +258,7 @@ final.plot + scale_colour_manual(values=legend.values, breaks=legend.labels)
 ggsave(filename="final.plot.png", plot=final.plot, width=7, height=3)
 (final.plot)
 
-## Make TreeMap of Countries by Airline (subcategory)
+## Make TreeMap of Countries (main) by Airline (subcategory)
 air2country <- data.frame(airline=paths$airline, country=paths$ecountry)
 a2c <- as.data.frame(table(air2country))
 a2c <- a2c[a2c$Freq > 0, ]
