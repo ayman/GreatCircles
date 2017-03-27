@@ -85,7 +85,8 @@ getLongLatPairs <- function(row, airports, flights) {
                lat=as.numeric(start$latitude),
                lon=as.numeric(start$longitude),
                elat=as.numeric(end$latitude),
-               elon=as.numeric(end$longitude))
+               elon=as.numeric(end$longitude),
+               ecountry=end$country)
 }
 
 ### Do this for every flight via a list apply.  Notice we pulled out
@@ -99,8 +100,9 @@ lpaths <- lapply(1:num.flights,
 ### Flatten the list into one data.frame.
 paths <- do.call("rbind", lpaths)
 
-### Factor the airlines into entities.
+### Factor things
 paths$airline <- factor(paths$airline)
+paths$ecountry <- factor(paths$ecountry)
 
 ### get some numbers
 num.paths <- dim(paths)[1]
@@ -110,7 +112,8 @@ range.paths <- 1:num.paths
 library(maps)
 library(ggplot2)
 library(geosphere)
-library(multicore)
+library(parallel)
+## library(multicore)
 
 ### Get a crummy map projection of the world.
 getWorldMap <- function(long="long", lat="lat") {
@@ -173,7 +176,7 @@ makeArchs <- function(x, paths=paths) {
 }
 
 ### How many cores do we have?  If we have more than 1, lets use n-1.
-num.cores = multicore:::detectCores(all.tests=TRUE)
+num.cores = parallel:::detectCores()
 if (num.cores != 1) num.cores <-  num.cores - 1
 
 ### Make the archs across the cores. 
@@ -181,7 +184,7 @@ archs <- mclapply(range.paths,
                   makeArchs,
                   paths=paths,
                   mc.cores=num.cores,
-                  mc.preschedule=TRUE)  
+                  mc.preschedule=TRUE) 
 
 ### Making the list.
 row.count <- mclapply(1:num.paths,
@@ -244,13 +247,36 @@ legend.labels <- c("United Airlines", "Lufthansa", "US Airways",
 ### Lets pick a colorbrewer set if we want to show frequency vs
 ### category.
 ### http://colorbrewer2.org/?type=qualitative&scheme=Paired&n=7
-legend.values <- c("United Airlines"="#fdbf6f", "Lufthansa"="#e31a1c",
-                   "US Airways"="#fb9a99", "Singapore Airlines"="#33a02c",
+legend.values <- c("United Airlines"="#a6ceff", "Lufthansa"="#e31a1c",
+                   "US Airways"="#fb9a99", "Singapore Airlines"="#33A02C",
                    "Air Canada"="#b2df8a", "Air New Zealand"="#1f78b4",
-                   "Other"="#a6cee3")
+                   "Other"="#fdbf6f")
 
 ### Fin.
-#### final.plot + scale_colour_manual(values=legend.values, breaks=legend.labels)
+final.plot + scale_colour_manual(values=legend.values, breaks=legend.labels)
 ### ggsave(filename="final.plot.pdf", plot=final.plot, width=14)
 ggsave(filename="final.plot.png", plot=final.plot, width=7, height=3)
 (final.plot)
+
+## Make TreeMap of Countries by Airline (subcategory)
+air2country <- data.frame(airline=paths$airline, country=paths$ecountry)
+a2c <- as.data.frame(table(air2country))
+a2c <- a2c[a2c$Freq > 0, ]
+
+library(treemap)
+# tmPlot(a2c, index=c("country", "airline"), vSize="Freq")
+treemap(a2c,
+        index = c("country", "airline"),
+        vSize = "Freq",
+        vColor = "airline",
+        type = "categorical",
+        title = "Who I fly to where",
+        title.legend = "",
+        algorithm = "pivotSize",
+        sortID = "Freq",
+        fontsize.legend = 9,
+        fontsize.labels = 9,
+        lowerbound.cex.labels = 0.25,
+        overlap.labels = 0,
+        align.labels = list(c("right", "bottom"),
+                            c("left", "top")))
