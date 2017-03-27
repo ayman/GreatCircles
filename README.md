@@ -30,7 +30,8 @@ around the web too.
 
 Flight Map
 ----------
-
+![Great Circle Map](https://github.com/ayman/GreatCircles/blob/master/plot.map.png?raw=true)
 
 Tree Map
 --------
+![Tree Map](https://github.com/ayman/GreatCircles/blob/master/plot.tm.png?raw=true)
