@@ -37,7 +37,7 @@ a
 [WWW 2017 tutorial](https://sites.google.com/view/geocycle-www17/home)
 
 The data in `flights.csv` is fictional.  Just so you know that Virgin
-America doesn't have a SFO to SFO flight.  There are several good
+America ~~doesn't~~didn't have a SFO to SFO flight.  There are several good
 [Airport Databases](http://www.partow.net/miscellaneous/airportdatabase/)
 around the web too.
 
