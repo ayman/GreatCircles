@@ -89,6 +89,7 @@ get_long_lat_pairs <- function(row, airports, flights) {
                lon = as.numeric(start$longitude),
                elat = as.numeric(end$latitude),
                elon = as.numeric(end$longitude),
+               country = start$country,
                ecountry = end$country)
 }
 
@@ -105,6 +106,7 @@ paths <- do.call("rbind", lpaths)
 
 ## Factor things
 paths$airline <- factor(paths$airline)
+paths$country <- factor(paths$country)
 paths$ecountry <- factor(paths$ecountry)
 
 ## get some numbers
@@ -284,8 +286,33 @@ treemap(a2c,
         fontsize.legend = 9,
         fontsize.labels = c(18, 11),
         overlap.labels = 0,
-        palette = "Dark2",
+        palette = "-Paired",
         border.col = c("#ffffff", "#888888"),
         align.labels = list(c("left", "bottom"),
                             c("right", "top")))
+dev.off()
+
+## If you only want international flights
+## f_paths <- paths[paths$country != paths$ecountry, ]
+## f_air2country <- data.frame(airline = f_paths$airline,
+##                             country = f_paths$ecountry)
+## f_a2c <- as.data.frame(table(f_air2country))
+## f_a2c <- f_a2c[f_a2c$Freq > 0, ]
+## png("plot.tm.png", width = 1280, height = 720)
+## treemap(f_a2c,
+##         index = c("country", "airline"),
+##         vSize = "Freq",
+##         vColor = "airline",
+##         type = "categorical",
+##         title = "Who I fly to where international",
+##         title.legend = "",
+##         algorithm = "squarified",
+##         sortID = "Freq",
+##         fontsize.legend = 9,
+##         fontsize.labels = c(18, 11),
+##         overlap.labels = 0,
+##         palette = "-Paired",
+##         border.col = c("#ffffff", "#888888"),
+##         align.labels = list(c("left", "bottom"),
+##                             c("right", "top")))
 ## dev.off()
