@@ -280,10 +280,11 @@ treemap(a2c,
         algorithm = "squarified",
         sortID = "Freq",
         fontsize.legend = 9,
-        fontsize.labels = c(12, 7),
+        fontsize.labels = c(11, 7),
         lowerbound.cex.labels = 0.1,
         overlap.labels = 0,
         palette = "Dark2",
+        border.col = c("#ffffff", "#888888"),
         align.labels = list(c("left", "bottom"),
                             c("right", "top")))
 dev.off()
