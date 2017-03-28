@@ -29,10 +29,11 @@ airports <- read.csv("airports.csv",
                      colClasses = airport.classes,
                      col.names = airport.cols)
 
-### Our flights, from openflights.org looks like this
+## Our flights, from openflights.org looks like this
 ## http://openflights.org/help/csv.html but the sample dataset only
 ## has the first 5 columns.  I'll include this for the sample
 ## commented out.
+##
 ## flight.cols <- c("Date", "From", "To", "Flight_Number", "Airline",
 ##                  "Distance", "Duration", "Seat", "Seat_Type", "Class",
 ##                  "Reason", "Plane", "Registration", "Trip", "Note",
@@ -75,10 +76,11 @@ flights <- transform(flights,
                      To = sample(To),
                      Airline = sample(Airline))
 
-### In effect we want to join the long/lat points for each airport
-### (from/to).
-###     airline    lat       lon     elat      elon
-###   US Airways 35.214 -80.94314 37.61897 -122.3749
+## In effect we want to join the long/lat points for each airport
+## (from/to).
+##
+##     airline    lat       lon     elat      elon
+##   US Airways 35.214 -80.94314 37.61897 -122.3749
 get_long_lat_pairs <- function(row, airports, flights) {
     start <- airports[(airports[, 5] == flights$From[row]), ]
     end <- airports[(airports[, 5] == flights$To[row]), ]
@@ -259,7 +261,7 @@ legend.values <- c("United Airlines" = "#a6ceff", "Lufthansa" = "#e31a1c",
 ### Fin.
 final.plot + scale_colour_manual(values = legend.values, breaks = legend.labels)
 ## ggsave(filename = "final.plot.pdf", plot = final.plot, width = 14)
-## ggsave(filename = "plot.map.png", plot = final.plot, width = 7, height = 3)
+ggsave(filename = "plot.map.png", plot = final.plot, width = 7, height = 3)
 
 ## Make TreeMap of Countries (main) by Airline (subcategory)
 air2country <- data.frame(airline = paths$airline, country = paths$ecountry)
@@ -275,12 +277,13 @@ treemap(a2c,
         type = "categorical",
         title = "Who I fly to where",
         title.legend = "",
-        algorithm = "pivotSize",
+        algorithm = "squarified",
         sortID = "Freq",
         fontsize.legend = 9,
         fontsize.labels = 9,
-        lowerbound.cex.labels = 0.25,
+        lowerbound.cex.labels = 0.2,
         overlap.labels = 0,
-        align.labels = list(c("right", "bottom"),
-                            c("left", "top")))
+        palette = "Dark2",
+        align.labels = list(c("left", "bottom"),
+                            c("right", "top")))
 ## dev.off()
