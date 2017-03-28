@@ -269,7 +269,7 @@ a2c <- as.data.frame(table(air2country))
 a2c <- a2c[a2c$Freq > 0, ]
 
 library(treemap)
-## png("plot.tm.png")
+png("plot.tm.png")
 treemap(a2c,
         index = c("country", "airline"),
         vSize = "Freq",
@@ -280,10 +280,10 @@ treemap(a2c,
         algorithm = "squarified",
         sortID = "Freq",
         fontsize.legend = 9,
-        fontsize.labels = 9,
-        lowerbound.cex.labels = 0.2,
+        fontsize.labels = c(12, 7),
+        lowerbound.cex.labels = 0.1,
         overlap.labels = 0,
         palette = "Dark2",
         align.labels = list(c("left", "bottom"),
                             c("right", "top")))
-## dev.off()
+dev.off()
